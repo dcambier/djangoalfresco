@@ -1,0 +1,39 @@
+{% extends 'adminlte/base.html' %}
+
+{% block content %}
+{% load render_table from django_tables2 %}
+<h2>{{ title }}</h2>
+<div class="container">
+   
+    {% if sites %}
+    <table class="table table-bordered table-striped" id="sites">
+      <tr>
+        <th>Role</th>
+        <th>Visibility</th>
+        <th>Guid</th>
+        <th>Id</th>
+        <th>Preset</th>
+        <th>Title</th>
+      </tr>
+      {% for site in sites %}
+      <tr>
+        <td>{{ site.entry.role }}</td>
+        <td>{{ site.entry.visibility }}</td>
+        <td>{{ site.entry.guid }}</td>
+        <td>{{ site.entry.id }}</td>
+        <td>{{ site.entry.preset }}</td>
+        <td>{{ site.entry.title }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+      <strong>There are no site.</strong>
+    {% endif %}
+  </div>
+{% endblock %}
+
+<script>
+$(document).ready(function(){
+    $('#sites').DataTable();
+});
+</script>

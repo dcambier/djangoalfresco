@@ -1,0 +1,39 @@
+{% extends 'adminlte/base.html' %}
+
+{% block content %}
+{% load render_table from django_tables2 %}
+<h2>{{ title }}</h2>
+<div class="container">
+   
+    {% if people %}
+    <table class="table table-bordered table-striped" id="people">
+      <tr>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Quota Used</th>
+        <th>Id</th>
+        <th>Enabled</th>
+        <th>Email</th>
+      </tr>
+      {% for person in people %}
+      <tr>
+        <td>{{ person.entry.firstName }}</td>
+        <td>{{ person.entry.lastName }}</td>
+        <td>{{ person.entry.quotaUsed }}</td>
+        <td>{{ person.entry.id }}</td>
+        <td>{{ person.entry.enabled }}</td>
+        <td>{{ person.entry.email }}</td>        
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+      <strong>There are no people.</strong>
+    {% endif %}
+  </div>
+{% endblock %}
+
+<script>
+$(document).ready(function(){
+    $('#people').DataTable();
+});
+</script>

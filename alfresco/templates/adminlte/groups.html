@@ -1,0 +1,33 @@
+{% extends 'adminlte/base.html' %}
+
+{% block content %}
+{% load render_table from django_tables2 %}
+<h2>{{ title }}</h2>
+<div class="container">
+   
+    {% if groups %}
+    <table class="table table-bordered table-striped" id="groups">
+      <tr>
+        <th>Id</th>
+        <th>Display Name</th>
+        <th>Is Root</th>
+      </tr>
+      {% for group in groups %}
+      <tr>
+        <td>{{ group.entry.id }}</td>
+        <td>{{ group.entry.displayName }}</td>
+        <td>{{ group.entry.isRoot }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+      <strong>There are no group.</strong>
+    {% endif %}
+  </div>
+{% endblock %}
+
+<script>
+$(document).ready(function(){
+    $('#groups').DataTable();
+});
+</script>
