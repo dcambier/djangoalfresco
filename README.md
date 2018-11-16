@@ -33,7 +33,6 @@ If you want full support then install dependencies make sure to install these pa
 ## Database
 
 User Informations are stored in database SQLite. (sqlite3.db)
-Change database in settings.py 
 
     DATABASES = {
         'default': {
@@ -45,6 +44,10 @@ Change database in settings.py
             'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
         }
     }
+You can change database in settings.py.
+After that, don't forget to migrate.
+
+    python manage.py migrate
 
 ## Alfresco
 
