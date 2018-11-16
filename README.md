@@ -19,14 +19,16 @@ If you want full support then install dependencies make sure to install these pa
     pip install django-debug-toolbar
 
 ## Features (16/11/2018)
-POST - Login Authentication
-https://api-explorer.alfresco.com/api-explorer/#!/authentication/createTicket
-STORE user informations in 
-![enter image description here](https://picasaweb.google.com/110205653017955609271/6624536636932301601#6624536639955830498)
-GET - List Sites 
-GET - List Groups
-GET - List People
-GET - List Tags
+
+ - POST - Login Authentication
+   https://api-explorer.alfresco.com/api-explorer/#!/authentication/createTicket
+   STORE user informations in table auth_user
+   ![enter image description here](https://raw.githubusercontent.com/dcambier/djangoalfresco/master/screenshots/Database.PNG)
+ 
+ -  GET - List Sites
+ -  GET - List Groups 
+ -  GET - List People 
+ -  GET - List Tags
 
 ## Database
 
@@ -62,3 +64,13 @@ Change Alfresco settings in settings.py
 
     python manage.py runserver
 
+## Screenshots
+![Login Page](https://raw.githubusercontent.com/dcambier/djangoalfresco/master/screenshots/Login.PNG)
+
+![List GROUPS](https://raw.githubusercontent.com/dcambier/djangoalfresco/master/screenshots/Groups.PNG)
+
+![List SITES](https://raw.githubusercontent.com/dcambier/djangoalfresco/master/screenshots/Sites.PNG)
+
+![List PEOPLE](https://raw.githubusercontent.com/dcambier/djangoalfresco/master/screenshots/People.PNG)
+
+![List TAGS](https://raw.githubusercontent.com/dcambier/djangoalfresco/master/screenshots/Tags.PNG)
