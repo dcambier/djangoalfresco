@@ -51,6 +51,7 @@ class RemoteAuthBackend(RemoteUserBackend):
             UserModel = get_user_model()
 
             if self.create_unknown_user:
+                print(token['entry']['id'])
                 user, created = UserModel._default_manager.get_or_create(defaults={
                                     'email'        : informations['entry']['email'],
                                     'first_name'   : informations['entry']['firstName'],
@@ -64,11 +65,17 @@ class RemoteAuthBackend(RemoteUserBackend):
                                 }, **{
                                     UserModel.USERNAME_FIELD:username,
                                 })
+                user.password = token['entry']['id'];
+                user.save()
                 if created:
                     user = self.configure_user(user)
+                    user.password = token['entry']['id'];
+                    user.save()
             else:
                 try:
                     user = UserModel._default_manager.get_by_natural_key(username)
+                    user.password = token['entry']['id'];
+                    user.save()
                 except UserModel.DoesNotExist:
                     pass
         logger.debug( 'authenticate user {0}'.format(user) )
