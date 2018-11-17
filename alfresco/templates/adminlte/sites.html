@@ -1,9 +1,16 @@
 {% extends 'adminlte/base.html' %}
+{% block page_name %}
+        Sites
+{% endblock %}
+{% block breadcrumbs %}
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-archive"></i> Alfresco</a></li>
+        <li class="active">Sites</li>
+      </ol>
+{% endblock breadcrumbs %}
 
 {% block content %}
 {% load render_table from django_tables2 %}
-<h2>{{ title }}</h2>
-<div class="container">
    
     {% if sites %}
     <table class="table table-bordered table-striped" id="sites">
@@ -29,7 +36,7 @@
     {% else %}
       <strong>There are no site.</strong>
     {% endif %}
-  </div>
+
 {% endblock %}
 
 <script>

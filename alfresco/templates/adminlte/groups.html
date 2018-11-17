@@ -1,10 +1,17 @@
 {% extends 'adminlte/base.html' %}
+{% block page_name %}
+        Groups
+{% endblock %}
+{% block breadcrumbs %}
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-users"></i> Alfresco</a></li>
+        <li class="active">Groups</li>
+      </ol>
+{% endblock breadcrumbs %}
 
 {% block content %}
 {% load render_table from django_tables2 %}
-<h2>{{ title }}</h2>
-<div class="container">
-   
+  
     {% if groups %}
     <table class="table table-bordered table-striped" id="groups">
       <tr>
@@ -23,7 +30,7 @@
     {% else %}
       <strong>There are no group.</strong>
     {% endif %}
-  </div>
+
 {% endblock %}
 
 <script>
