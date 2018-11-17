@@ -21,7 +21,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='adminlte/index.html')),
+    url(r'^$', include('alfresco.urls')),
     url(r'^admin/', admin.site.urls),
     path('alfresco/', include('alfresco.urls'))
 ]
