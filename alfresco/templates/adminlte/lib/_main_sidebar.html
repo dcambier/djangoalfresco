@@ -14,6 +14,18 @@
                 <p>{% firstof request.user.get_full_name request.user.username %}</p>
             </div>
         </div>
+        
+		<form class="sidebar-form" id="search_form" method="post" action="/alfresco/search">
+		{% csrf_token %}
+        <div class="input-group">
+          <input type="text" name="query" id="query" class="form-control" placeholder="Search...">
+          <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                  <i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+      	</form>        
         {% endif %}
         {% endblock %}
 
