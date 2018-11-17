@@ -1,9 +1,16 @@
 {% extends 'adminlte/base.html' %}
+{% block page_name %}
+        Tags
+{% endblock %}
+{% block breadcrumbs %}
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-tags"></i> Alfresco</a></li>
+        <li class="active">Tags</li>
+      </ol>
+{% endblock breadcrumbs %}
 
 {% block content %}
 {% load render_table from django_tables2 %}
-<h2>{{ title }}</h2>
-<div class="container">
    
     {% if tags %}
     <table class="table table-bordered table-striped" id="tags">
@@ -21,7 +28,7 @@
     {% else %}
       <strong>There are no tag.</strong>
     {% endif %}
-  </div>
+
 {% endblock %}
 
 <script>
