@@ -1,0 +1,39 @@
+{% extends 'adminlte/base.html' %}
+{% block page_name %}
+        Search
+{% endblock %}
+{% block breadcrumbs %}
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-search"></i> Alfresco</a></li>
+        <li class="active">Search</li>
+      </ol>
+{% endblock breadcrumbs %}
+
+{% block content %}
+
+<h2>{{ title }}</h2>
+<div class="container">
+   
+	<form class="form-signin span8" id="search_form" method="post" action="/alfresco/search">
+	{% csrf_token %}
+	<input type="text" name="query" id="query" value=""/>
+	<input class="btn btn-primary" type="submit" name="submit" value="Search"/>
+	</form>
+	
+	{% if result_list %}
+	<div style="clear: both;">
+		<ol>
+		{% for result in result_list %}
+			<li>
+				<strong><a href="#">{{ result.name }}</a></strong><br/>
+				<em>{{ result.id }}</em>
+			</li>
+		{% endfor %}
+		</ol>
+	{% endif %}
+</div>
+{% endblock %}
+
+<script>
+
+</script>

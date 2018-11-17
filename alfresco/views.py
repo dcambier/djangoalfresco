@@ -5,6 +5,8 @@ import base64
 from requests.auth import HTTPBasicAuth
 from django.shortcuts import render
 from django.conf import settings
+from django.template.context import RequestContext
+from alfresco.search import run_query
 
 ############################################
 # PAGES
@@ -84,4 +86,18 @@ def tags(request):
         'title' : 'List of Tags',
         'tags' : content['list']['entries'],
     })   
-
+    
+def search(request):
+    if request.user.is_authenticated:
+        password = request.user.password
+        
+    result_list = []
+    
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+        
+        if query:
+            result_list = run_query(query, password)
+            
+    return render(request, 'adminlte/search.html', {
+        'result_list': result_list})

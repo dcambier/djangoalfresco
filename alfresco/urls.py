@@ -11,4 +11,5 @@ urlpatterns = [
     path('groups', views.groups, name='groups'),
     path('people', views.people, name='people'),
     path('tags', views.tags, name='tags'),
+    path('search', views.search, name='search'),
 ]
