@@ -20,6 +20,11 @@ If you want full support then install dependencies make sure to install these pa
 
 ## Features (17/11/2018)
 
+ - Viewer
+ - Link Datatable
+ 
+## Features (17/11/2018)
+
  - POST - Search
    Keyword + CMIS
  - Dashboard + theme
@@ -79,6 +84,8 @@ Change Alfresco settings in settings.py
 ![dashboard](https://raw.githubusercontent.com/dcambier/djangoalfresco/master/screenshots/dashboard.PNG)
 
 ![search](https://raw.githubusercontent.com/dcambier/djangoalfresco/master/screenshots/search.PNG)
+
+![viewer](https://raw.githubusercontent.com/dcambier/djangoalfresco/master/screenshots/viewer.PNG)
 
 ![List GROUPS](https://raw.githubusercontent.com/dcambier/djangoalfresco/master/screenshots/Groups.PNG)
 
