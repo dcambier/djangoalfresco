@@ -18,7 +18,11 @@ If you want full support then install dependencies make sure to install these pa
     pip install django_pdb
     pip install django-debug-toolbar
 
-## Features (17/11/2018)
+## Upcoming features
+
+- Upload with jQuery File Upload
+
+## Features (18/11/2018)
 
  - Viewer
  - Link Datatable
