@@ -4,7 +4,9 @@ import base64
 
 from django.shortcuts import render
 from django.conf      import settings
+from django.http      import HttpResponse, JsonResponse
 from alfresco.search  import run_query, run_query_cmis
+from alfresco.content import get_content, get_content_informations, get_content_mimetype
 from alfresco.count   import count_sites, count_tags, count_people, count_groups
 from alfresco.utils   import percentage
 
@@ -31,6 +33,7 @@ def index(request):
     
     return render(request, "adminlte/index.html", 
     {
+        'build_page_title' : 'Alfresco Django',
         'count_sites' : counter_sites,
         'count_tags'  : counter_tags,
         'count_people': counter_people,
@@ -55,6 +58,7 @@ def sites(request):
     content = response.json()
         
     return render(request, 'adminlte/sites.html', {
+        'build_page_title' : 'Alfresco Django - Sites',
         'status' : response.status_code,
         'title' : 'List of Sites',
         'sites' : content['list']['entries'],
@@ -73,6 +77,7 @@ def tags(request):
     content = response.json()
     
     return render(request, 'adminlte/tags.html', {
+        'build_page_title' : 'Alfresco Django - Tags',
         'status' : response.status_code,
         'title' : 'List of Tags',
         'tags' : content['list']['entries'],
@@ -91,6 +96,7 @@ def people(request):
     content = response.json()
         
     return render(request, 'adminlte/people.html', {
+        'build_page_title' : 'Alfresco Django - People',
         'status' : response.status_code,
         'title' : 'List of People',
         'people' : content['list']['entries'],
@@ -109,6 +115,7 @@ def groups(request):
     content = response.json()
         
     return render(request, 'adminlte/groups.html', {
+        'build_page_title' : 'Alfresco Django - Groups',
         'status' : response.status_code,
         'title' : 'List of Groups',
         'groups' : content['list']['entries'],
@@ -127,4 +134,35 @@ def search(request):
             result_list = run_query(query, password)
             
     return render(request, 'adminlte/search.html', {
+        'build_page_title' : 'Alfresco Django - Search',
         'result_list': result_list})
+    
+def viewer(request, nodeId):
+    if request.user.is_authenticated:
+        password = request.user.password
+    
+    return render(request, 'adminlte/viewer.html', {
+        'build_page_title' : 'Alfresco Django - Viewer',
+        'nodeId' : nodeId})    
+    
+def content(request, nodeId):
+    if request.user.is_authenticated:
+        password = request.user.password
+        
+    content = get_content(nodeId, password)
+    response = HttpResponse(content)
+    mimetype = get_content_mimetype(nodeId, password)
+    response['Content-Type'] = mimetype
+    return response
+
+def content_json(request, nodeId):
+    if request.user.is_authenticated:
+        password = request.user.password
+        
+    content = get_content_informations(nodeId, password)
+    content = json.dumps(content, indent=4, sort_keys=True)
+    
+    response = HttpResponse(content)
+    response['Content-Type'] = 'application/json'
+    return response
+    

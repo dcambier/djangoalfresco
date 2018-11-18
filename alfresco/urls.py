@@ -12,4 +12,8 @@ urlpatterns = [
     path('people', views.people, name='people'),
     path('tags', views.tags, name='tags'),
     path('search', views.search, name='search'),
+    url(r'^viewer/(?P<nodeId>[a-zA-Z0-9_-]+)$',views.viewer),
+    url(r'^content/(?P<nodeId>[a-zA-Z0-9_-]+)$',views.content),
+    url(r'^content_json/(?P<nodeId>[a-zA-Z0-9_-]+)$',views.content_json),
+    
 ]

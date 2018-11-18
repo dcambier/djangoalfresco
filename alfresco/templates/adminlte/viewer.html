@@ -1,0 +1,57 @@
+{% extends 'adminlte/base.html' %}
+{% block title %}{{ build_page_title }}{% endblock %} 
+{% block page_name %}
+        Viewer
+{% endblock %}
+{% block breadcrumbs %}
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-archive"></i> Alfresco</a></li>
+        <li class="active">Viewer</li>
+      </ol>
+{% endblock breadcrumbs %}
+
+{% block content %}
+  <div class="row">
+
+    <div class="col-xs-6">
+
+            <iframe id="pdfDocument"
+                title="Documento PDF"
+                width="100%"
+                height="800"
+                src='/alfresco/content/{{ nodeId }}'>
+            </iframe>
+ 
+  	 </div>
+  	 
+    <div class="col-xs-6">
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">Document Data </h3>
+         </div>
+        
+        <div class="box-body">
+              <table class="table table-bordered">
+                <tbody>
+                <tr>
+                  <td>
+                 <iframe id="jsonDocument"
+	                title="JSON"
+	                width="100%"
+	                height="800"
+	                src='/alfresco/content_json/{{ nodeId }}'>
+	            </iframe>
+                  </td>
+                </tr>
+
+              </tbody></table>
+            </div>
+      </div>
+    </div>
+      	 
+  </div> 
+{% endblock %}
+
+<script>
+
+</script>

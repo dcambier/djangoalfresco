@@ -1,4 +1,5 @@
 {% extends 'adminlte/base.html' %}
+{% block title %}{{ build_page_title }}{% endblock %} 
 {% block page_name %}
         Search
 {% endblock %}
@@ -20,15 +21,21 @@
 	{% if result_list %}
     <table class="table table-bordered table-striped" id="sites">
       <tr>
-        <th>Id</th>
         <th>Name</th>
-        <th>Location</th>
+        <th>Author</th>
+        <th>Type</th>
+        <th>Size(Bytes)</th>
       </tr>
 		{% for result in result_list %}
 	      <tr>
-	        <td>{{ result.id }}</td>
-	        <td>{{ result.name }}</td>
-	        <td>{{ result.location }}</td>
+	      {% if result.isFile == True %}
+	      <td><a href="/alfresco/viewer/{{ result.id }}">{{ result.name }}</a></td>
+	      {% else %}
+	      <td>{{ result.name }}</td> 
+	      {% endif %}
+	        <td>{{ result.author }}</td>
+	        <td>{{ result.mimeTypeName }}</td>
+	        <td>{{ result.sizeInBytes }}</td>
 	      </tr>		
 		{% endfor %}
 	</table>

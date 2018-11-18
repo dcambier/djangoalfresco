@@ -12,7 +12,7 @@ def count_sites(token):
     try:
         response  = requests.get(settings.URL_CORE + settings.URL_SITES + default_params, headers=headers)
         content = response.json()
-        print(content)
+        
         count = len(content['list']['entries'])
     except :
         print("Error when querying the Alfresco API.")

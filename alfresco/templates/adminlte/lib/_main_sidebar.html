@@ -12,6 +12,7 @@
             </div>
             <div class="pull-left info">
                 <p>{% firstof request.user.get_full_name request.user.username %}</p>
+                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
         
@@ -59,7 +60,12 @@
                         <a href="{% block tags_url %}{% url 'tags' %}{% endblock %}" >
                             <i class="fa fa-tags"></i> <span>Tags</span>
                         </a>
-                </li>                                  
+                </li> 
+                <li>
+                        <a href="{% block search_url %}{% url 'search' %}{% endblock %}" >
+                            <i class="fa fa-search"></i> <span>Search</span>
+                        </a>
+                </li>  
 
                 <li class="header">{% block adm_heading %}DJANGO{% endblock %}</li>                         
                 <li>

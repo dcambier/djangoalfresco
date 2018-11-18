@@ -51,7 +51,7 @@ class RemoteAuthBackend(RemoteUserBackend):
             UserModel = get_user_model()
 
             if self.create_unknown_user:
-                print(token['entry']['id'])
+                
                 user, created = UserModel._default_manager.get_or_create(defaults={
                                     'email'        : informations['entry']['email'],
                                     'first_name'   : informations['entry']['firstName'],

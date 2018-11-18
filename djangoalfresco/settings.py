@@ -30,6 +30,7 @@ URL_TICKETS   = "tickets"
 URL_PEOPLE    = "people"
 URL_TAGS      = "tags"
 URL_SEARCH    = "search"
+URL_NODES     = "nodes"
 
 USER_LOGIN    = "admin"
 USER_PASSWORD = "admin"
