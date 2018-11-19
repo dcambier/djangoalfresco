@@ -1,16 +1,21 @@
 import requests
 import json
 import base64
+import mimetypes
 
-from django.shortcuts import render
-from django.conf      import settings
-from django.http      import HttpResponse, JsonResponse
-from alfresco.search  import run_query, run_query_cmis
-from alfresco.content import get_content, get_content_informations, get_content_mimetype
-from alfresco.count   import count_sites, count_tags, count_people, count_groups
-from alfresco.utils   import percentage
+from django.shortcuts    import render
+from django.conf         import settings
+from django.http         import HttpResponse, JsonResponse
+from alfresco.search     import run_query, run_query_cmis
+from alfresco.content    import get_content, get_content_informations, get_content_mimetype, post_node_children, put_content_node
+from alfresco.count      import count_sites, count_tags, count_people, count_groups
+from alfresco.utils      import percentage, clear_database, get_file_content
 from django.contrib.auth import logout
-from django.http import HttpResponseRedirect
+from django.http         import HttpResponseRedirect
+from django.views        import View
+
+from .forms              import DocumentForm
+from .models             import Document
 
 ############################################
 # PAGES
@@ -18,10 +23,10 @@ from django.http import HttpResponseRedirect
 def index(request):
     if request.user.is_authenticated:
         password = request.user.password
-    
+    else:
     # TODO : Token invalid, automatic logout + redirect
-    # logout(request)
-    # return HttpResponseRedirect("/admin/login")
+        logout(request)
+        return HttpResponseRedirect("/admin/login")
     
     counter_sites  = count_sites(password)
     counter_tags   = count_tags(password)
@@ -171,4 +176,45 @@ def content_json(request, nodeId):
     response = HttpResponse(content)
     response['Content-Type'] = 'application/json'
     return response
+
+class BasicUploadView(View):
+    def get(self, request):
+        documents_list = Document.objects.all()
+        return render(self.request, 'adminlte/basic-upload.html', {'documents': documents_list})
+
+    def post(self, request):
+        
+        form = DocumentForm(self.request.POST, self.request.FILES)
+        file = self.request.FILES
+
+        if form.is_valid():
+            if request.user.is_authenticated:
+                password = request.user.password
+            
+            
+            if request.user.username == "admin":
+                query = "select * from cmis:folder WHERE cmis:name = 'User Homes'"
+            else:
+                query = "select * from cmis:folder WHERE cmis:name = '" + request.user.username +"'"
+                
+            query_user_home = run_query_cmis(query, password, 1)
+            result_user_home = query_user_home[0]['id']
+
+            document = form.save()
+            file_mime = mimetypes.guess_type(document.file.url)[0]
+            response = post_node_children(result_user_home, document.file.name , password)
+
+            if response.status_code == 201:
+                children = response.json()
+                put_content_node(children['entry']['id'], "media/" + document.file.name  , password)
+            
+            data = {'is_valid': True, 'name': document.file.name, 'url': document.file.url}
+            clear_database()
+        else:
+            data = {'is_valid': False}
+        return JsonResponse(data)
+    
+
+  
+    
     

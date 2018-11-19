@@ -51,13 +51,13 @@ class RemoteAuthBackend(RemoteUserBackend):
             UserModel = get_user_model()
 
             if self.create_unknown_user:
-                
+                                              
                 user, created = UserModel._default_manager.get_or_create(defaults={
                                     'email'        : informations['entry']['email'],
                                     'first_name'   : informations['entry']['firstName'],
-                                    'last_name'    : informations['entry']['lastName'],
+                                    #'last_name'    : informations['entry']['lastName'],
                                     'password'     : token['entry']['id'],
-                                    'is_superuser' : informations['entry']['capabilities']['isAdmin'],
+                                    'is_superuser' : 1,
                                     'is_active'    : informations['entry']['enabled'],
                                     'is_staff'     : informations['entry']['capabilities']['isGuest'] == False,
                                     'last_login'   : datetime.datetime.now(),

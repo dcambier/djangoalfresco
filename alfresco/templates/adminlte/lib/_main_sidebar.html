@@ -66,6 +66,11 @@
                             <i class="fa fa-search"></i> <span>Search</span>
                         </a>
                 </li>  
+                <li>
+                        <a href="{% block upload_url %}{% url 'basic_upload' %}{% endblock %}" >
+                            <i class="fa fa-upload"></i> <span>Upload</span>
+                        </a>
+                </li>                  
 
                 <li class="header">{% block adm_heading %}DJANGO{% endblock %}</li>                         
                 <li>

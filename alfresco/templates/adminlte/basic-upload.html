@@ -1,0 +1,42 @@
+{% extends 'adminlte/base.html' %}
+{% load static %}
+{% block title %}{{ build_page_title }}{% endblock %} 
+{% block page_name %}
+        Upload
+{% endblock %}
+{% block breadcrumbs %}
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-user"></i> Alfresco</a></li>
+        <li class="active">Upload</li>
+      </ol>
+{% endblock breadcrumbs %}
+
+
+{% block content %}
+  <div style="margin-bottom: 20px;">
+    <button type="button" class="btn btn-primary js-upload-photos">
+      <span class="glyphicon glyphicon-cloud-upload"></span> Upload documents
+    </button>
+    <input id="fileupload" type="file" name="file" multiple
+           style="display: none;"
+           data-url="{% url 'basic_upload' %}"
+           data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+  </div>
+
+  <table id="gallery" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Uploaded Documents</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for document in documents %}
+        <tr>
+          <td>{{ document.file.name }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+
