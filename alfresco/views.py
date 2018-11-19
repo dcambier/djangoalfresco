@@ -9,6 +9,8 @@ from alfresco.search  import run_query, run_query_cmis
 from alfresco.content import get_content, get_content_informations, get_content_mimetype
 from alfresco.count   import count_sites, count_tags, count_people, count_groups
 from alfresco.utils   import percentage
+from django.contrib.auth import logout
+from django.http import HttpResponseRedirect
 
 ############################################
 # PAGES
@@ -16,6 +18,10 @@ from alfresco.utils   import percentage
 def index(request):
     if request.user.is_authenticated:
         password = request.user.password
+    
+    # TODO : Token invalid, automatic logout + redirect
+    # logout(request)
+    # return HttpResponseRedirect("/admin/login")
     
     counter_sites  = count_sites(password)
     counter_tags   = count_tags(password)

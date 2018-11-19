@@ -10,5 +10,12 @@
 <link rel="stylesheet" type="text/css" href="{% static "admin-lte/dist/css/skins/_all-skins.min.css" %}">
 <link rel="stylesheet" type="text/css" href="{% static "icheck/skins/square/blue.css" %}">
 <link rel="stylesheet" type="text/css" href="{% static "conflicts/conflicts.css" %}">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+<link rel="stylesheet" type="text/css" href="{% static "datatables/css/datatables.min.css" %}">
+
+<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
+<link rel="stylesheet" href="{% static "jfu/css/jquery.fileupload.css" %}">
+<link rel="stylesheet" href="{% static "jfu/css/jquery.fileupload-ui.css" %}">
+<!-- CSS adjustments for browsers with JavaScript disabled -->
+<noscript><link rel="stylesheet" href="{% static "jfu/css/jquery.fileupload-noscript.css" %}"></noscript>
+<noscript><link rel="stylesheet" href="{% static "jfu/css/jquery.fileupload-ui-noscript.css" %}"></noscript>
 {% endblock %}
