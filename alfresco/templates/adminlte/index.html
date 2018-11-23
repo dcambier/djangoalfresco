@@ -106,7 +106,7 @@
 						{% for result in result_list %}
 					      <tr>
 					      {% if result.isFile == True %}
-					      <td><a href="/alfresco/viewer/{{ result.id }}">{{ result.name }}</a></td>
+					      <td><a href="/viewer/{{ result.id }}">{{ result.name }}</a></td>
 					      {% else %}
 					      <td>{{ result.name }}</td> 
 					      {% endif %}

@@ -12,7 +12,7 @@
 
 {% block content %}
    
-	<form class="form-group" id="search_form" method="post" action="/alfresco/search">
+	<form class="form-group" id="search_form" method="post" action="/search">
 	{% csrf_token %}
 	<input class="form-control" type="text" name="query" id="query" value="" placeholder="Search..."/>
 	<input class="btn btn-primary btn-block" type="submit" name="submit" value="Search"/>
@@ -29,7 +29,7 @@
 		{% for result in result_list %}
 	      <tr>
 	      {% if result.isFile == True %}
-	      <td><a href="/alfresco/viewer/{{ result.id }}">{{ result.name }}</a></td>
+	      <td><a href="/viewer/{{ result.id }}">{{ result.name }}</a></td>
 	      {% else %}
 	      <td>{{ result.name }}</td> 
 	      {% endif %}
