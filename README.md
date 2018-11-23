@@ -18,6 +18,11 @@ If you want full support then install dependencies make sure to install these pa
     pip install django_pdb
     pip install django-debug-toolbar
 
+## Features (23/11/2018)
+
+- Material Design AdminLTE
+- New URLs
+
 ## Features (19/11/2018)
 
 - Upload with jQuery File Upload
@@ -102,7 +107,9 @@ Change Alfresco settings in settings.py
 ![List TAGS](https://raw.githubusercontent.com/dcambier/djangoalfresco/master/screenshots/Tags.PNG)
 
 ## Credits
+
 [Django Admin LTE2](https://github.com/adamcharnock/django-adminlte2)
+
 [Material Design for AdminLTE](https://github.com/DucThanhNguyen/MaterialAdminLTE)
 
 ## License
