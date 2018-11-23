@@ -212,7 +212,7 @@ def content_json(request, nodeId):
 class BasicUploadView(View):
     def get(self, request):
         documents_list = Document.objects.all()
-        return render(self.request, 'adminlte/basic-upload.html', {'documents': documents_list})
+        return render(self.request, 'adminlte/basic-upload.html', { 'build_page_title' : 'Alfresco Django - Upload', 'documents': documents_list})
 
     def post(self, request):
         
@@ -227,17 +227,9 @@ class BasicUploadView(View):
                 logout(request)
                 return HttpResponseRedirect("/admin/login")
             
-            if request.user.username == "admin":
-                query = "select * from cmis:folder WHERE cmis:name = 'User Homes'"
-            else:
-                query = "select * from cmis:folder WHERE cmis:name = '" + request.user.username +"'"
-                
-            query_user_home = run_query_cmis(query, password, 1)
-            result_user_home = query_user_home[0]['id']
-
             document = form.save()
             file_mime = mimetypes.guess_type(document.file.url)[0]
-            response = post_node_children(result_user_home, document.file.name , password)
+            response = post_node_children("-my-", document.file.name , password)
 
             if response.status_code == 201:
                 children = response.json()
