@@ -21,18 +21,24 @@
 	{% if result_list %}
     <table class="table table-bordered table-striped" id="sites">
       <tr>
+      	<th></th>
         <th>Name</th>
         <th>Author</th>
         <th>Type</th>
         <th>Size(Bytes)</th>
       </tr>
+        {% load mimetypes %}
 		{% for result in result_list %}
 	      <tr>
+	      
 	      {% if result.isFile == True %}
+	      <td><img src="{% icon result.mimeType "32x32" %}"/></td>
 	      <td><a href="/viewer/{{ result.id }}">{{ result.name }}</a></td>
 	      {% else %}
+	      <td></td>
 	      <td>{{ result.name }}</td> 
 	      {% endif %}
+
 	        <td>{{ result.author }}</td>
 	        <td>{{ result.mimeTypeName }}</td>
 	        <td>{{ result.sizeInBytes }}</td>

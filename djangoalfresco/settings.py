@@ -60,7 +60,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'alfresco',
-    'alfresco_adminlte_theme',
+    #'alfresco_adminlte_theme',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_tables2',
     'django_pdb',
+    'icons_mimetypes',
 ]
 
 MIDDLEWARE = [
