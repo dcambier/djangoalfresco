@@ -100,3 +100,10 @@ Change Alfresco settings in settings.py
 ![List PEOPLE](https://raw.githubusercontent.com/dcambier/djangoalfresco/master/screenshots/People.PNG)
 
 ![List TAGS](https://raw.githubusercontent.com/dcambier/djangoalfresco/master/screenshots/Tags.PNG)
+
+## Credits
+[Django Admin LTE2](https://github.com/adamcharnock/django-adminlte2)
+[Material Design for AdminLTE](https://github.com/DucThanhNguyen/MaterialAdminLTE)
+
+## License
+MIT
