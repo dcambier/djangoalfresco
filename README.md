@@ -18,7 +18,7 @@ If you want full support then install dependencies make sure to install these pa
     pip install django_pdb
     pip install django-debug-toolbar
 
-## Upcoming features
+## Features (19/11/2018)
 
 - Upload with jQuery File Upload
 
@@ -90,6 +90,8 @@ Change Alfresco settings in settings.py
 ![search](https://raw.githubusercontent.com/dcambier/djangoalfresco/master/screenshots/search.PNG)
 
 ![viewer](https://raw.githubusercontent.com/dcambier/djangoalfresco/master/screenshots/viewer.PNG)
+
+![upload](https://raw.githubusercontent.com/dcambier/djangoalfresco/master/screenshots/upload.PNG)
 
 ![List GROUPS](https://raw.githubusercontent.com/dcambier/djangoalfresco/master/screenshots/Groups.PNG)
 
