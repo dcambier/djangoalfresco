@@ -100,9 +100,14 @@ class _Menu:
 
     def admin_apps(self, context, r):
         request = context['request']
+        #return None
         for app in context['available_apps']:
+            app_name = app['name']
+            if app_name == 'Authentication and Authorization':
+                app_name = 'Security'
+                
             r += '<li class="treeview"><a href="#"><i class="fa fa-circle"></i> <span>%s</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">\n' % (
-                app['name'])
+                app_name)
 
             for model in app['models']:
                 if 'add_url' in model:
@@ -117,6 +122,8 @@ class _Menu:
                 if 'admin_url' in model:
                     url = model['admin_url']
 
+                model_name = model['name']
+  
                 icon = '<i class="fa fa-circle-o"></i>'
                 if model['object_name'].title() in self.models_icon:
                     if self.models_icon[model['object_name'].title()] != '':
@@ -125,9 +132,9 @@ class _Menu:
                         else:
                             icon = '<i class="%s"></i>' % (self.models_icon[model['object_name'].title()])
                 if(request.path == url):
-                    r += '<li class="active"><a href="%s">%s %s</a></li>' % (url, icon, model['name'])
+                    r += '<li class="active"><a href="%s">%s %s</a></li>' % (url, icon, model_name)
                 else:
-                    r += '<li><a href="%s">%s %s</a></li>' % (url, icon, model['name'])
+                    r += '<li><a href="%s">%s %s</a></li>' % (url, icon, model_name)
 
             r += '</ul></li>\n'
 

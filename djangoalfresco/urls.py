@@ -24,8 +24,7 @@ from django.urls import path, include
 
 urlpatterns = [
     url(r'^', include('alfresco.urls')),
-    url(r'^admin/', admin.site.urls),
-    path('alfresco/', include('alfresco.urls'))
+    url(r'^admin/', admin.site.urls)
 ]
 
 if settings.DEBUG:

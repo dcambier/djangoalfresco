@@ -28,6 +28,7 @@
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 {% block header_dropdowns %}
+                <!--  
                     <li class="dropdown user user-menu">
                             <a href="{% block alfresco_url %}{% url 'index' %}{% endblock %}">
                                 <img src="{% static "images/alfresco.png" %}" class="user-image" width="30" alt="User Image">
@@ -39,7 +40,8 @@
                                 <img src="{% static "images/django.png" %}" class="user-image" width="30" alt="User Image">
                                 <span class="hidden-xs">{% trans 'Django' %}</span>
                             </a>
-                    </li>                
+                    </li> 
+                 -->               
                     {% if request.user.is_authenticated %}
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -61,10 +63,11 @@
                                 {% block menu_footer %}
                                 {% if request.user.is_superuser %}
                                 <li class="user-footer">
+                                	<!--  
                                     <div class="pull-left">
                                         <a href="{% block change_password_url %}{% url 'admin:password_change' %}{% endblock %}"
                                            class="btn btn-default btn-flat">{% trans 'Change password' %}</a>
-                                    </div>
+                                    </div>-->
                                     <div class="pull-right">
                                         <a href="{% block logout_url %}{% logout_url %}{% endblock %}" class="btn btn-default btn-flat">Sign out</a>
                                     </div>

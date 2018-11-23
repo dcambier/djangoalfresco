@@ -11,12 +11,13 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-LOGIN_REDIRECT_URL = '/'
+from django.conf.global_settings import LOGIN_REDIRECT_URL
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 PROTOCOL           = "http://"
-SERVER             =  "192.168.0.107" 
+SERVER             =  "192.168.0.104" 
 PORT               = "8080"
 VERSION            = "1"
 URL_BASE           = PROTOCOL + SERVER + ":" + PORT + "/alfresco/api/-default-/public/"
@@ -80,7 +81,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'djangoalfresco.urls'
+ROOT_URLCONF = 'alfresco.urls'
 
 TEMPLATES = [
     {
@@ -155,3 +156,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'index'
+
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'index'
