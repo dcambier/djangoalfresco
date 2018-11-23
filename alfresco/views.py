@@ -24,7 +24,7 @@ def index(request):
     if request.user.is_authenticated:
         password = request.user.password
     else:
-    # TODO : Token invalid, automatic logout + redirect
+        # TODO : Function + Token invalid, automatic logout + redirect
         logout(request)
         return HttpResponseRedirect("/admin/login")
     
@@ -59,7 +59,11 @@ def index(request):
 def sites(request):
     if request.user.is_authenticated:
         password = request.user.password
-
+    else:
+        # TODO : Function + Token invalid, automatic logout + redirect
+        logout(request)
+        return HttpResponseRedirect("/admin/login")
+    
     default_params = "?skipCount=0&maxItems=100"
 
     auth = bytes('Basic ', "utf-8")
@@ -78,7 +82,11 @@ def sites(request):
 def tags(request):
     if request.user.is_authenticated:
         password = request.user.password
-
+    else:
+        # TODO : Function + Token invalid, automatic logout + redirect
+        logout(request)
+        return HttpResponseRedirect("/admin/login")
+    
     default_params = "?skipCount=0&maxItems=100"
 
     auth = bytes('Basic ', "utf-8")
@@ -97,7 +105,11 @@ def tags(request):
 def people(request):
     if request.user.is_authenticated:
         password = request.user.password
-
+    else:
+        # TODO : Function + Token invalid, automatic logout + redirect
+        logout(request)
+        return HttpResponseRedirect("/admin/login")
+    
     default_params = "?skipCount=0&maxItems=100"
 
     auth = bytes('Basic ', "utf-8")
@@ -116,7 +128,11 @@ def people(request):
 def groups(request):
     if request.user.is_authenticated:
         password = request.user.password
-
+    else:
+        # TODO : Function + Token invalid, automatic logout + redirect
+        logout(request)
+        return HttpResponseRedirect("/admin/login")
+    
     default_params = "?skipCount=0&maxItems=100"
 
     auth = bytes('Basic ', "utf-8")
@@ -135,7 +151,11 @@ def groups(request):
 def search(request):
     if request.user.is_authenticated:
         password = request.user.password
-        
+    else:
+        # TODO : Function + Token invalid, automatic logout + redirect
+        logout(request)
+        return HttpResponseRedirect("/admin/login")
+           
     result_list = []
     
     if request.method == 'POST':
@@ -151,7 +171,11 @@ def search(request):
 def viewer(request, nodeId):
     if request.user.is_authenticated:
         password = request.user.password
-    
+    else:
+        # TODO : Function + Token invalid, automatic logout + redirect
+        logout(request)
+        return HttpResponseRedirect("/admin/login")
+       
     return render(request, 'adminlte/viewer.html', {
         'build_page_title' : 'Alfresco Django - Viewer',
         'nodeId' : nodeId})    
@@ -159,7 +183,11 @@ def viewer(request, nodeId):
 def content(request, nodeId):
     if request.user.is_authenticated:
         password = request.user.password
-        
+    else:
+        # TODO : Function + Token invalid, automatic logout + redirect
+        logout(request)
+        return HttpResponseRedirect("/admin/login")
+            
     content = get_content(nodeId, password)
     response = HttpResponse(content)
     mimetype = get_content_mimetype(nodeId, password)
@@ -169,7 +197,11 @@ def content(request, nodeId):
 def content_json(request, nodeId):
     if request.user.is_authenticated:
         password = request.user.password
-        
+    else:
+        # TODO : Function + Token invalid, automatic logout + redirect
+        logout(request)
+        return HttpResponseRedirect("/admin/login")
+            
     content = get_content_informations(nodeId, password)
     content = json.dumps(content, indent=4, sort_keys=True)
     
@@ -190,7 +222,10 @@ class BasicUploadView(View):
         if form.is_valid():
             if request.user.is_authenticated:
                 password = request.user.password
-            
+            else:
+                # TODO : Function + Token invalid, automatic logout + redirect
+                logout(request)
+                return HttpResponseRedirect("/admin/login")
             
             if request.user.username == "admin":
                 query = "select * from cmis:folder WHERE cmis:name = 'User Homes'"
