@@ -35,7 +35,7 @@
 	      <td><img src="{% icon result.mimeType "32x32" %}"/></td>
 	      <td><a href="/viewer/{{ result.id }}">{{ result.name }}</a></td>
 	      {% else %}
-	      <td></td>
+	      <td><img src="{% icon "folder" "32x32" %}"/></td>
 	      <td>{{ result.name }}</td> 
 	      {% endif %}
 

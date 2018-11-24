@@ -3,30 +3,31 @@ import json
 import base64
 import mimetypes
 
-from django.shortcuts    import render
-from django.conf         import settings
-from django.http         import HttpResponse, JsonResponse
-from alfresco.search     import run_query, run_query_cmis
-from alfresco.content    import get_content, get_content_informations, get_content_mimetype, post_node_children, put_content_node
-from alfresco.count      import count_sites, count_tags, count_people, count_groups
-from alfresco.utils      import percentage, clear_database, get_file_content
-from django.contrib.auth import logout
-from django.http         import HttpResponseRedirect
-from django.views        import View
+from django.shortcuts        import render
+from django.conf             import settings
+from django.http             import HttpResponse, JsonResponse
+from alfresco.search         import run_query, run_query_cmis
+from alfresco.content        import get_content, get_content_informations, get_content_mimetype, post_node_children, put_content_node
+from alfresco.count          import count_sites, count_tags, count_people, count_groups
+from alfresco.utils          import percentage, clear_database, check_token
+from alfresco.authentication import get_ticket
+from alfresco.people         import get_people_id
+from django.contrib.auth     import logout
+from django.http             import HttpResponseRedirect
+from django.views            import View
 
-from .forms              import DocumentForm
-from .models             import Document
+from .forms                  import DocumentForm
+from .models                 import Document
 
 ############################################
 # PAGES
 ############################################
 def index(request):
-    if request.user.is_authenticated:
-        password = request.user.password
-    else:
-        # TODO : Function + Token invalid, automatic logout + redirect
+    password = check_token(request)
+    
+    if password == None:
         logout(request)
-        return HttpResponseRedirect("/admin/login")
+        return HttpResponseRedirect("/login")
     
     counter_sites  = count_sites(password)
     counter_tags   = count_tags(password)
@@ -56,14 +57,28 @@ def index(request):
         'result_list': result_list_last_documents,
     })
 
-def sites(request):
-    if request.user.is_authenticated:
-        password = request.user.password
-    else:
-        # TODO : Function + Token invalid, automatic logout + redirect
+def profile(request):
+    password = check_token(request)
+
+    if password == None:
         logout(request)
-        return HttpResponseRedirect("/admin/login")
+        return HttpResponseRedirect("/login")    
     
+    response = get_people_id(password, request.user.username)
+    print(response.json())
+    return render(request, 'adminlte/profile.html', {
+        'build_page_title' : 'Alfresco Django - User Profile',
+        'user' : response.json(),
+        'title' : 'User Profile'
+    })
+    
+def sites(request):
+    password = check_token(request)
+
+    if password == None:
+        logout(request)
+        return HttpResponseRedirect("/login")
+        
     default_params = "?skipCount=0&maxItems=100"
 
     auth = bytes('Basic ', "utf-8")
@@ -80,13 +95,12 @@ def sites(request):
     })
 
 def tags(request):
-    if request.user.is_authenticated:
-        password = request.user.password
-    else:
-        # TODO : Function + Token invalid, automatic logout + redirect
+    password = check_token(request)
+
+    if password == None:
         logout(request)
-        return HttpResponseRedirect("/admin/login")
-    
+        return HttpResponseRedirect("/login")
+        
     default_params = "?skipCount=0&maxItems=100"
 
     auth = bytes('Basic ', "utf-8")
@@ -103,13 +117,12 @@ def tags(request):
     })  
     
 def people(request):
-    if request.user.is_authenticated:
-        password = request.user.password
-    else:
-        # TODO : Function + Token invalid, automatic logout + redirect
+    password = check_token(request)
+
+    if password == None:
         logout(request)
-        return HttpResponseRedirect("/admin/login")
-    
+        return HttpResponseRedirect("/login")
+        
     default_params = "?skipCount=0&maxItems=100"
 
     auth = bytes('Basic ', "utf-8")
@@ -126,13 +139,12 @@ def people(request):
     })    
 
 def groups(request):
-    if request.user.is_authenticated:
-        password = request.user.password
-    else:
-        # TODO : Function + Token invalid, automatic logout + redirect
+    password = check_token(request)
+
+    if password == None:
         logout(request)
-        return HttpResponseRedirect("/admin/login")
-    
+        return HttpResponseRedirect("/login")
+        
     default_params = "?skipCount=0&maxItems=100"
 
     auth = bytes('Basic ', "utf-8")
@@ -149,13 +161,12 @@ def groups(request):
     })
     
 def search(request):
-    if request.user.is_authenticated:
-        password = request.user.password
-    else:
-        # TODO : Function + Token invalid, automatic logout + redirect
+    password = check_token(request)
+
+    if password == None:
         logout(request)
-        return HttpResponseRedirect("/admin/login")
-           
+        return HttpResponseRedirect("/login")
+               
     result_list = []
     
     if request.method == 'POST':
@@ -169,25 +180,23 @@ def search(request):
         'result_list': result_list})
     
 def viewer(request, nodeId):
-    if request.user.is_authenticated:
-        password = request.user.password
-    else:
-        # TODO : Function + Token invalid, automatic logout + redirect
+    password = check_token(request)
+
+    if password == None:
         logout(request)
-        return HttpResponseRedirect("/admin/login")
-       
+        return HttpResponseRedirect("/login")
+           
     return render(request, 'adminlte/viewer.html', {
         'build_page_title' : 'Alfresco Django - Viewer',
         'nodeId' : nodeId})    
     
 def content(request, nodeId):
-    if request.user.is_authenticated:
-        password = request.user.password
-    else:
-        # TODO : Function + Token invalid, automatic logout + redirect
+    password = check_token(request)
+
+    if password == None:
         logout(request)
-        return HttpResponseRedirect("/admin/login")
-            
+        return HttpResponseRedirect("/login")
+          
     content = get_content(nodeId, password)
     response = HttpResponse(content)
     mimetype = get_content_mimetype(nodeId, password)
@@ -195,13 +204,12 @@ def content(request, nodeId):
     return response
 
 def content_json(request, nodeId):
-    if request.user.is_authenticated:
-        password = request.user.password
-    else:
-        # TODO : Function + Token invalid, automatic logout + redirect
+    password = check_token(request)
+
+    if password == None:
         logout(request)
-        return HttpResponseRedirect("/admin/login")
-            
+        return HttpResponseRedirect("/login")
+        
     content = get_content_informations(nodeId, password)
     content = json.dumps(content, indent=4, sort_keys=True)
     
@@ -220,13 +228,11 @@ class BasicUploadView(View):
         file = self.request.FILES
 
         if form.is_valid():
-            if request.user.is_authenticated:
-                password = request.user.password
-            else:
-                # TODO : Function + Token invalid, automatic logout + redirect
+            password = check_token(request)
+            if password == None:
                 logout(request)
-                return HttpResponseRedirect("/admin/login")
-            
+                return HttpResponseRedirect("/login")
+    
             document = form.save()
             file_mime = mimetypes.guess_type(document.file.url)[0]
             response = post_node_children("-my-", document.file.name , password)

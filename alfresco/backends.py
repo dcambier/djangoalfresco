@@ -1,15 +1,19 @@
 from __future__ import unicode_literals
 
-from django.conf import settings
-from django.contrib.auth.backends import RemoteUserBackend
-from django.contrib.auth import get_user_model
 import requests
-from requests.auth import HTTPBasicAuth
 import datetime
 import logging
 import time
 import json
 import sys
+
+from django.conf                  import settings
+from django.contrib.auth.backends import RemoteUserBackend
+from django.contrib.auth          import get_user_model
+from requests.auth                import HTTPBasicAuth
+from alfresco.authentication      import post_ticket
+from alfresco.people              import get_people
+
 
 logger = logging.getLogger('django.auth.backends')
 
@@ -29,21 +33,13 @@ class RemoteAuthBackend(RemoteUserBackend):
         user = None
         token = None
 
-        headers = {
-        'Accept': 'application/json', 
-        'Content-Type' : 'application/json',
-        }
-
-        body = '{"userId":"' + username + '", "password":"' + password + '"}'
-        try: 
-            response = requests.post(settings.URL_AUTHENTICATION + settings.URL_TICKETS, headers=headers, data=body, auth=HTTPBasicAuth(settings.USER_LOGIN, settings.USER_PASSWORD))
-        except: token = None
-
+        response = post_ticket(username, password)
         token = response.json()
 
         if response.status_code == 201 :
             try: 
-                response = requests.get(settings.URL_CORE + settings.URL_PEOPLE + "/" + username, headers=headers, auth=HTTPBasicAuth(settings.USER_LOGIN, settings.USER_PASSWORD))
+                response = get_people(username)
+
             except: informations = None
 
             informations = response.json()
@@ -51,13 +47,12 @@ class RemoteAuthBackend(RemoteUserBackend):
             UserModel = get_user_model()
 
             if self.create_unknown_user:
-                                              
                 user, created = UserModel._default_manager.get_or_create(defaults={
                                     'email'        : informations['entry']['email'],
                                     'first_name'   : informations['entry']['firstName'],
                                     #'last_name'    : informations['entry']['lastName'],
                                     'password'     : token['entry']['id'],
-                                    'is_superuser' : 1,
+                                    #'is_superuser' : is_superuser,
                                     'is_active'    : informations['entry']['enabled'],
                                     'is_staff'     : informations['entry']['capabilities']['isGuest'] == False,
                                     'last_login'   : datetime.datetime.now(),
@@ -65,17 +60,30 @@ class RemoteAuthBackend(RemoteUserBackend):
                                 }, **{
                                     UserModel.USERNAME_FIELD:username,
                                 })
+                
                 user.password = token['entry']['id'];
+                
+                is_superuser = 0
+                if informations['entry']['capabilities']['isAdmin'] == True:
+                    is_superuser = 1
+                user.is_superuser = is_superuser     
+
+                is_active = 0
+                if informations['entry']['enabled'] == True:
+                    is_active = 1
+                user.is_active = is_active        
+                
+                try :          
+                    user.last_name = informations['entry']['lastName']
+                except KeyError:
+                    user.last_name = ''
+                    
                 user.save()
                 if created:
                     user = self.configure_user(user)
-                    user.password = token['entry']['id'];
-                    user.save()
             else:
                 try:
                     user = UserModel._default_manager.get_by_natural_key(username)
-                    user.password = token['entry']['id'];
-                    user.save()
                 except UserModel.DoesNotExist:
                     pass
         logger.debug( 'authenticate user {0}'.format(user) )

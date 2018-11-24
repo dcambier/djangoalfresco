@@ -14,6 +14,7 @@ urlpatterns = [
     path('people', views.people, name='people'),
     path('tags', views.tags, name='tags'),
     path('search', views.search, name='search'),
+    path('profile', views.profile, name='profile'),
     url(r'^clear/$', views.clear_database, name='clear_database'),
     url(r'^basic-upload/$', views.BasicUploadView.as_view(), name='basic_upload'),
     url(r'^viewer/(?P<nodeId>[a-zA-Z0-9_-]+)$',views.viewer),
