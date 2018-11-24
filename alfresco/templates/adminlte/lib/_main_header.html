@@ -62,6 +62,7 @@
                                 <!-- Menu Footer-->
                                 {% block menu_footer %}
                                 {% if request.user.is_superuser %}
+                                {% endif %}
                                 <li class="user-footer">
                                 	<!--  
                                     <div class="pull-left">
@@ -72,7 +73,7 @@
                                         <a href="{% block logout_url %}{% url 'admin:logout' %}{% endblock %}" class="btn btn-default btn-flat">Sign out</a>
                                     </div>
                                 </li>
-                                {% endif %}
+
                                 {% endblock %}
 
                             </ul>

@@ -13,7 +13,7 @@
  *
  * https://github.com/lipis/bootstrap-social
  */
-@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,600,700,300italic,400italic,600italic);
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic);
 .btn.btn-social,
 .btn.btn-social-icon {
   text-align: center;
@@ -1813,7 +1813,7 @@ fieldset[disabled] .btn.btn-social-icon.btn-yahoo.focus {
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
 }
 .main-header .logo {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: 'Muli', 'Helvetica', 'Arial', sans-serif;
   height: 60px;
   line-height: 60px;
 }
