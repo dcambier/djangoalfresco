@@ -64,6 +64,10 @@
                                 {% if request.user.is_superuser %}
                                 {% endif %}
                                 <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="/profile"
+                                           class="btn btn-default btn-flat">{% trans 'Profile' %}</a>
+                                    </div>                           
                                 	<!--  
                                     <div class="pull-left">
                                         <a href="{% block change_password_url %}{% url 'admin:password_change' %}{% endblock %}"

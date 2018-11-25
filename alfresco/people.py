@@ -27,5 +27,30 @@ def get_people_id(token, username):
         print("Error when querying the Alfresco Core API.")   
         
     return response    
+
+def get_people_avatar(token, username):
+    auth = bytes('Basic ', "utf-8")
+    headers = {'Accept': 'application/json' , 'Authorization' : auth + base64.b64encode(bytes(token, "utf-8"))}    
+    try:
+        print(settings.URL_CORE + settings.URL_PEOPLE + "/" + username + "/avatar?attachment=false&placeholder=true")
+        response  = requests.get(settings.URL_CORE + settings.URL_PEOPLE + "/" + username + "/avatar?attachment=false&placeholder=true", headers=headers)
+    
+    except :
+        response = None
+        print("Error when querying the Alfresco Core API.")   
+        
+    return response  
+
+def get_people_activities(token, username, maxItems):
+    auth = bytes('Basic ', "utf-8")
+    headers = {'Accept': 'application/json' , 'Authorization' : auth + base64.b64encode(bytes(token, "utf-8"))}    
+    try:
+        response  = requests.get(settings.URL_CORE + settings.URL_PEOPLE + "/" + username + "/activities?skipCount=0&maxItems=" + maxItems, headers=headers)
+    
+    except :
+        response = None
+        print("Error when querying the Alfresco Core API.")   
+        
+    return response  
     
     

@@ -11,13 +11,13 @@ from alfresco.content        import get_content, get_content_informations, get_c
 from alfresco.count          import count_sites, count_tags, count_people, count_groups
 from alfresco.utils          import percentage, clear_database, check_token
 from alfresco.authentication import get_ticket
-from alfresco.people         import get_people_id
+from alfresco.people         import get_people_id, get_people_avatar, get_people_activities
 from django.contrib.auth     import logout
 from django.http             import HttpResponseRedirect
 from django.views            import View
 
 from .forms                  import DocumentForm
-from .models                 import Document
+from .models                 import Document, Activity
 
 ############################################
 # PAGES
@@ -64,11 +64,20 @@ def profile(request):
         logout(request)
         return HttpResponseRedirect("/login")    
     
-    response = get_people_id(password, request.user.username)
-    print(response.json())
+    user = get_people_id(password, request.user.username)
+    activities = get_people_activities(password, request.user.username, "10")
+    activities = activities.json()
+    activities = activities['list']['entries']
+
+    for activity in activities:
+        act = Activity.objects.get(code=activity['entry']['activityType'])
+        activity['entry']['activity'] = act.title
+
     return render(request, 'adminlte/profile.html', {
         'build_page_title' : 'Alfresco Django - User Profile',
-        'user' : response.json(),
+        'user'             : user.json(),
+        'activities'       : activities,
+        'avatar'           : avatar,
         'title' : 'User Profile'
     })
     
@@ -203,6 +212,29 @@ def content(request, nodeId):
     response['Content-Type'] = mimetype
     return response
 
+def avatar(request, user=None):
+
+    password = check_token(request)
+
+    if password == None:
+        logout(request)
+        return HttpResponseRedirect("/login")
+    
+    if user != None:
+        content = get_people_avatar(password, user)        
+    else:
+        content = get_people_avatar(password, request.user.username)
+
+    if content.status_code == 200:
+        response = HttpResponse(content)
+        response['Content-Type'] = 'image/png'
+        return response
+    else:
+        return 'https://www.gravatar.com/avatar/{hash}?s={size}&d=mm'.format(
+            hash=md5(user.email.encode('utf-8')).hexdigest() if is_authenticated(user) else '',
+            size=size or '',        
+            )
+        
 def content_json(request, nodeId):
     password = check_token(request)
 

@@ -2,3 +2,4 @@ eclipse.preferences.version=1
 encoding//alfresco/templates/adminlte/index.html=UTF-8
 encoding//alfresco/templates/adminlte/profile.html=UTF-8
 encoding//icons_mimetypes/icons.py=utf-8
+encoding//icons_mimetypes/templatetags/mimetypes.py=utf8

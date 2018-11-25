@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^basic-upload/$', views.BasicUploadView.as_view(), name='basic_upload'),
     url(r'^viewer/(?P<nodeId>[a-zA-Z0-9_-]+)$',views.viewer),
     url(r'^content/(?P<nodeId>[a-zA-Z0-9_-]+)$',views.content),
+    url(r'^avatar',views.avatar),
     url(r'^content_json/(?P<nodeId>[a-zA-Z0-9_-]+)$',views.content_json),
     
     path('admin/login/', auth_views.LoginView.as_view(), name='login'),    

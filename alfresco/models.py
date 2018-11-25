@@ -6,4 +6,9 @@ class Document(models.Model):
     title = models.CharField(max_length=255, blank=True)
     file = models.FileField(upload_to='')
     uploaded_at = models.DateTimeField(auto_now_add=True)
+    
+class Activity(models.Model):
+    code = models.CharField(max_length=255, blank=True)
+    title = models.CharField(max_length=255, blank=True)
+
  

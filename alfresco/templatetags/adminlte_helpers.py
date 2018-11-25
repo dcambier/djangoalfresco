@@ -17,10 +17,13 @@ def logout_url():
 def admin_url():
     return getattr(settings, 'ADMIN_URL', '/admin')
 
-
 @register.simple_tag(takes_context=True)
 def avatar_url(context, size=None, user=None):
-    # TODO: Make behaviour configurable
+    if user == None:
+        return '/avatar'
+    else:
+        return '/avatar/' + user
+    
     user = context['request'].user if user is None else user
     return 'https://www.gravatar.com/avatar/{hash}?s={size}&d=mm'.format(
         hash=md5(user.email.encode('utf-8')).hexdigest() if is_authenticated(user) else '',
