@@ -2,7 +2,6 @@ from .models                 import Document
 from django.contrib.auth     import logout
 from django.http             import HttpResponseRedirect
 from alfresco.authentication import get_ticket
-from properties.p            import Property
 
 def clear_database():
     for document in Document.objects.all():
