@@ -19,7 +19,7 @@
           <div class="box box-primary">
             <div class="box-body box-profile">
 
-			  <img src="{% avatar_url size=128 %}" class="profile-user-img img-responsive img-circle" alt="User profile picture">
+			  <img src="{% avatar_url user=request.user.username size=128 %}" class="profile-user-img img-responsive img-circle" alt="User profile picture">
 
               <h3 class="profile-username text-center">{{ user.entry.firstName }} {{ user.entry.lastName }}</h3>
 

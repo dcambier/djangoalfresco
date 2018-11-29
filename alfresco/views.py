@@ -11,7 +11,7 @@ from alfresco.content        import get_content, get_content_informations, get_c
 from alfresco.count          import count_sites, count_tags, count_people, count_groups
 from alfresco.utils          import percentage, clear_database, check_token
 from alfresco.authentication import get_ticket
-from alfresco.people         import get_people_id, get_people_avatar, get_people_activities
+from alfresco.people         import get_peoples, get_people_id, get_people_avatar, get_people_activities
 from django.contrib.auth     import logout
 from django.http             import HttpResponseRedirect
 from django.views            import View
@@ -43,6 +43,10 @@ def index(request):
     query = "Select * from cmis:document ORDER BY cmis:creationDate DESC"
     result_list_last_documents = run_query_cmis(query, password, 10)
     
+    peoples = get_peoples("8")
+    peoples = peoples.json()
+    peoples = peoples['list']['entries']
+    
     return render(request, "adminlte/index.html", 
     {
         'build_page_title' : 'Alfresco Django',
@@ -55,6 +59,7 @@ def index(request):
         'percent_people': percent_people,
         'percent_groups': percent_groups,
         'result_list': result_list_last_documents,
+        'peoples': peoples,
     })
 
 def profile(request):
@@ -212,7 +217,7 @@ def content(request, nodeId):
     response['Content-Type'] = mimetype
     return response
 
-def avatar(request, user=None):
+def avatar(request, userId):
 
     password = check_token(request)
 
@@ -220,8 +225,8 @@ def avatar(request, user=None):
         logout(request)
         return HttpResponseRedirect("/login")
     
-    if user != None:
-        content = get_people_avatar(password, user)        
+    if userId != None:
+        content = get_people_avatar(password, userId)        
     else:
         content = get_people_avatar(password, request.user.username)
 

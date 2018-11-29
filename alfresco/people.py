@@ -3,6 +3,19 @@ import base64
 from django.conf    import settings
 from requests.auth  import HTTPBasicAuth
 
+def get_peoples(maxItems):
+
+    headers = {'Accept': 'application/json'}
+    default_params = '?skipCount=0&maxItems=100' + maxItems
+    try:
+        response = requests.get(settings.URL_CORE + settings.URL_PEOPLE + default_params, headers=headers, auth=HTTPBasicAuth(settings.USER_LOGIN, settings.USER_PASSWORD))
+    
+    except :
+        response = None
+        print("Error when querying the Alfresco Core API.")
+    
+    return response
+
 def get_people(username):
 
     headers = {'Accept': 'application/json' , 'Content-Type' : 'application/json'}

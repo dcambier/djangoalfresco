@@ -17,7 +17,7 @@ from django.conf.global_settings import LOGIN_REDIRECT_URL
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 PROTOCOL           = "http://"
-SERVER             =  "192.168.0.104" 
+SERVER             =  "192.168.0.105" 
 PORT               = "8080"
 VERSION            = "1"
 URL_BASE           = PROTOCOL + SERVER + ":" + PORT + "/alfresco/api/-default-/public/"
